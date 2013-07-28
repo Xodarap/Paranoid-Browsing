@@ -7,7 +7,7 @@ PB currently browses the "standard American" set of web pages, but you can easil
 
 Note: Since Paranoid Browsing clicks on links randomly, you will get a lot of pop-ups. I recommend having a dedicated window for PB.
 
-== Tech Overview ==
+*Tech Overview*
 
 PB follows the standard Chrome extension paradigm. Event.js is the "master" script, which manages the tab. Content.js is responsible for randomly clicking within loaded webpages.
 

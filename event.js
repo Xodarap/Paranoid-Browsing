@@ -61,7 +61,7 @@ function tabUpdated(tabId, changeInfo, tab) {
 	// work. In that case, try again.
 	setTimeout(function() {
 		chrome.tabs.get(extTabId, function(tab) {
-			if(tab.url == changeInfo.url) {
+			if(tab != undefined && tab.url == changeInfo.url) {
 				console.log('Page timed out. Restarting');
 				performInitialNavigation()
 			}

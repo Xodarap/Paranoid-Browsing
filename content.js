@@ -26,9 +26,9 @@ function processPage(depth) {
 	}
 	
 	// Wait some random, pseudo-realistic amount of time
-	var waitTime = Math.floor(Math.random() * 15000) + 5000;
+	var waitTime = Math.floor(Math.random() * 10000) + 5000;
 	setTimeout(function() {
-		console.log('Paranoid: sending to: ' + newLink.href + ' choice  ' + linkSel);
+		console.log('Paranoid: sending to: ' + newLink.href);
 		newLink.click();
 	}, waitTime);
 }

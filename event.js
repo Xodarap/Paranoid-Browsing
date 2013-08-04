@@ -6,17 +6,23 @@ var currentDepth = 0;
 
 // Returns a random top-level site to start browsing from
 function getNewSite() {
+	var topSites = new Array();
+	for(var idx = 0; idx < 10; idx++){
+		if(localStorage["pbPageList" + idx] != undefined && localStorage["pbPageList" + idx] != '')
+			topSites.push(localStorage["pbPageList" + idx]);
+	}
+	
 	// List of top-level news-type sites to start browsing from. Taken from http://www.alexa.com/topsites/countries/US
 	// In some cases modified away from the splash page so that randomly selected links are better
-	var topSites = ['http://www.cnn.com/', 
+	if(topSites.length == 0) {
+		topSites = ['http://www.cnn.com/', 
 					'http://news.yahoo.com',
 					'http://en.wikipedia.org/wiki/Main_Page',
 					'http://www.craigslist.org/',
 					'http://www.go.com',
 					'http://www.msn.com',
-					'http://www.aol.com',
-					'http://news.google.com/'];
-
+					'http://www.aol.com'];
+	}
 	var index = Math.floor(Math.random() * topSites.length);
 	return topSites[index];
 }

@@ -86,5 +86,7 @@ function tabUpdated(tabId, changeInfo, tab) {
 }
 
 chrome.tabs.onUpdated.addListener(tabUpdated);
-chrome.runtime.onStartup.addListener(init);
+if(chrome.runtime != undefined)
+	chrome.runtime.onStartup.addListener(init);
+
 init();

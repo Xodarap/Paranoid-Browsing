@@ -9,6 +9,4 @@ Note: Since Paranoid Browsing clicks on links randomly, you will get a lot of po
 
 **Tech Overview**
 
-PB follows the standard Chrome extension paradigm. Event.js is the "master" script, which manages the tab. Content.js is responsible for randomly clicking within loaded webpages.
-
-If you want to modify which pages PB looks at, edit the topSites variable in event.js.
+PB follows the standard Chrome extension paradigm. Event.js is the "master" script, which manages the tab. Content.js is responsible for randomly clicking within loaded webpages. Options.js/html is where the options are set.

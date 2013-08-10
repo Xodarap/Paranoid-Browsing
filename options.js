@@ -1,20 +1,17 @@
 /*
  * Handles loading/saving options for PB
- * Note: localStorage can't save arrays, so we concatenate the index number to our
- * prefix to mimic an array.
 */
 function saveData(){
 	var pageList = new Array();
 	var inputElems = document.getElementsByName('startPage');
-	var validCount = 0;
 	for(var idx = 0; idx < 10; idx++){
 		var page = inputElems[idx];
-		localStorage["pbPageList" + idx] = undefined;
 		if(page.value != undefined && page.value != ''){
-			localStorage["pbPageList" + validCount] = page.value;
-			validCount++;
+			pageList.push(page.value);
 		}
 	}
+	
+	localStorage["pbPageList"] = JSON.stringify(pageList);
 	
 	// Reload to move up any missing lines etc.
 	loadData();
@@ -22,15 +19,16 @@ function saveData(){
 
 function loadData(){
 	// Very first time loading PB
-	if(localStorage["pbPageList0"] == undefined) {
+	if(localStorage["pbPageList"] == undefined) {
 		restoreDefaults();
 		return;
 	}
 
+	var pageList = JSON.parse(localStorage["pbPageList"]);	
 	var inputElems = document.getElementsByName('startPage');
 	for(var idx = 0; idx < 10; idx++){
-		if(localStorage["pbPageList" + idx] != undefined)
-			inputElems[idx].value = localStorage["pbPageList" + idx];
+		if(pageList[idx] != undefined)
+			inputElems[idx].value = pageList[idx];
 		else
 			inputElems[idx].value = '';
 	}

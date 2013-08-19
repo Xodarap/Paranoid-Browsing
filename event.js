@@ -6,14 +6,21 @@ var currentDepth = 0;
 
 // Returns a random top-level site to start browsing from
 function getNewSite() {
-	var topSites = new Array();
-	for(var idx = 0; idx < 10; idx++){
-		if(localStorage["pbPageList" + idx] != undefined && localStorage["pbPageList" + idx] != '')
-			topSites.push(localStorage["pbPageList" + idx]);
+	var topSites
+	if ( localStorage["pbPageList"] == undefined ){
+		topSites = new Array(); //no topsites list configured yet, use defaults
+	}else{
+		topSites = JSON.parse(localStorage["pbPageList"]);
+	}
+	
+	
+	if (topSites == undefined){
+		topSites = new Array(); //couldn't parse saved topsites list, use defaults
 	}
 	
 	// List of top-level news-type sites to start browsing from. Taken from http://www.alexa.com/topsites/countries/US
 	// In some cases modified away from the splash page so that randomly selected links are better
+	//TODO - make this a constant somewhere so it's the same between here and options.js
 	if(topSites.length == 0) {
 		topSites = ['http://www.cnn.com/', 
 					'http://news.yahoo.com',

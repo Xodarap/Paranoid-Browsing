@@ -7,21 +7,20 @@ var currentDepth = 0;
 // Returns a random top-level site to start browsing from
 function getNewSite() {
 	var topSites;
-	if ( localStorage["pbPageList"] == undefined ){
-		topSites = new Array(); //no topsites list configured yet, use defaults
-	}else{
-		topSites = JSON.parse(localStorage["pbPageList"]);
+	if (!localStorage.pbPageList) {
+		topSites = []; //no topsites list configured yet, use defaults
+	} else {
+		topSites = JSON.parse(localStorage.pbPageList);
 	}
 
-
-	if (topSites == undefined){
-		topSites = new Array(); //couldn't parse saved topsites list, use defaults
+	if (!topSites) {
+		topSites = []; //couldn't parse saved topsites list, use defaults
 	}
 
 	// List of top-level news-type sites to start browsing from. Taken from http://www.alexa.com/topsites/countries/US
 	// In some cases modified away from the splash page so that randomly selected links are better
 	//TODO - make this a constant somewhere so it's the same between here and options.js
-	if(topSites.length == 0) {
+	if (topSites.length === 0) {
 		topSites = ['http://www.cnn.com/',
 					'http://news.yahoo.com',
 					'http://en.wikipedia.org/wiki/Main_Page',
@@ -47,7 +46,7 @@ function init() {
 	currentDepth = 0;
 	chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		// New tab started browsing; set or update the ID
-		if (request['paranoidTabId'] != undefined) {
+		if (request['paranoidTabId']) {
 			extTabId = request['paranoidTabId'];
 			console.log('New session started. Tab ID: ' + extTabId);
 			performInitialNavigation();
@@ -64,17 +63,14 @@ function init() {
 
 // Called when a tab changes.
 function tabUpdated(tabId, changeInfo, tab) {
-	// Ignore if it's not our paranoid tab
-	if (tabId != extTabId) { return; }
-
-	// Ignore unless this update is due to the URL being updated
-	if (changeInfo.url == undefined) { return; }
+	// Ignore if it's not our paranoid tab or unless the URL is updated
+	if (!changeInfo.url || tabId != extTabId) { return; }
 
 	// We sometimes click on a link which opens in a new tab, or in some way doesn't
 	// work. In that case, try again.
 	setTimeout(function() {
 		chrome.tabs.get(extTabId, function(tab) {
-			if(tab != undefined && tab.url == changeInfo.url) {
+			if(tab && tab.url == changeInfo.url) {
 				console.log('Page timed out. Restarting');
 				performInitialNavigation();
 			}
@@ -84,9 +80,9 @@ function tabUpdated(tabId, changeInfo, tab) {
 	// Inject our random-click script
 	currentDepth++;
 	console.log('Injecting into ' + changeInfo.url + '; depth: ' + currentDepth);
-	if(currentDepth < 16) {
+	if (currentDepth < 16) {
 		try {
-			chrome.tabs.executeScript(extTabId, {"file" : 'content.js'});
+			chrome.tabs.executeScript(extTabId, {'file' : 'content.js'});
 		} catch (e) {
 			// If this failed, it's because they are on a site we don't have access to
 			// (probably an https one, which we don't want to be messing with). Start over.
@@ -99,7 +95,8 @@ function tabUpdated(tabId, changeInfo, tab) {
 }
 
 chrome.tabs.onUpdated.addListener(tabUpdated);
-if(chrome.runtime != undefined)
-	chrome.runtime.onStartup.addListener(init);
+if (chrome.runtimed) {
+  chrome.runtime.onStartup.addListener(init);
+}
 
 init();

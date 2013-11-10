@@ -95,7 +95,7 @@ function tabUpdated(tabId, changeInfo, tab) {
 }
 
 chrome.tabs.onUpdated.addListener(tabUpdated);
-if (chrome.runtimed) {
+if (chrome.runtime) {
   chrome.runtime.onStartup.addListener(init);
 }
 

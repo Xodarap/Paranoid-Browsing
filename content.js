@@ -2,7 +2,12 @@ function processPage(depth) {
 	if(depth > 8) {
 		console.log('Paranoid: No good links found on page. Restarting.');
 		chrome.extension.sendMessage({ paranoidRestart: true });
+		return;
 	}
+
+	// Remove possible video element to avoid random sounds playing
+	// Do this continuously in case of JS loading in videos
+	window.setInterval(removeVideos, 500);
 
 	var allLinks = document.getElementsByTagName('a');
 	linkCount = allLinks.length;
@@ -30,8 +35,31 @@ function processPage(depth) {
 	var waitTime = Math.floor(Math.random() * 10000) + 5000;
 	setTimeout(function() {
 		console.log('Paranoid: sending to: ' + newAddress);
-		newLink.click();
+		window.location = newAddress;
 	}, waitTime);
+}
+
+function removeVideos() {
+	/* Remove possible video tags from page to avoid sound playing. */
+	// Tags to remove
+	var VIDEO_TAGS = ['object', 'embed', 'video'];
+
+	// Function for shorthand removal of nodes
+	function removeNode(node) {
+		node.parentNode.removeChild(node);
+	}
+
+	// Loop over tags to remove
+	for(var i = 0; i < VIDEO_TAGS.length; ++i) {
+
+		// Find all elements of the tag
+		var videoElems = document.getElementsByTagName(VIDEO_TAGS[i]);
+
+		// Remove all matching elements
+		for(var j = 0; j < videoElems.length; ++j) {
+			removeNode(videoElems[j]);
+		}
+	}
 }
 
 processPage(0);

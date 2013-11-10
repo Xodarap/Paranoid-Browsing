@@ -6,8 +6,8 @@
   "version": "1.4",
   "minimum_chrome_version": "22.0",
   "icons": {
-	"64": "icon.png",
-	"128": "big icon.png"
+  "64": "icon.png",
+  "128": "big icon.png"
   },
 
   "browser_action": {
@@ -16,14 +16,14 @@
   },
 
   "permissions": [
-	"tabs",
-	"webNavigation",
-	"http://*/*"
+  "tabs",
+  "webNavigation",
+  "http://*/*"
   ],
 
   "background": {
-	"scripts": ["event.js"],
-	"persistent": true
+  "scripts": ["event.js"],
+  "persistent": true
   },
 
   "options_page": "options.html"

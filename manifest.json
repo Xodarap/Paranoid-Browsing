@@ -3,7 +3,7 @@
 
   "name": "Paranoid Browsing",
   "description": "Confuse surveillers by randomly browsing the internet.",
-  "version": "1.4",
+  "version": "1.6",
   "minimum_chrome_version": "22.0",
   "icons": {
   "64": "icon.png",

@@ -46,6 +46,7 @@ function removeVideos() {
 
 	// Function for shorthand removal of nodes
 	function removeNode(node) {
+		console.log('Paranoid: removing video');
 		node.parentNode.removeChild(node);
 	}
 

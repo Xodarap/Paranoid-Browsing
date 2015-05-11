@@ -42,7 +42,7 @@ function processPage(depth) {
 function removeVideos() {
 	/* Remove possible video tags from page to avoid sound playing. */
 	// Tags to remove
-	var VIDEO_TAGS = ['object', 'embed', 'video'];
+	var VIDEO_TAGS = ['object', 'embed', 'video', 'iframe'];
 
 	// Function for shorthand removal of nodes
 	function removeNode(node) {
